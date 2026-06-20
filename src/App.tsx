@@ -44,7 +44,7 @@ export default function App() {
     return localStorage.getItem('tue_tinh_school') || '';
   });
   const [subjectArea, setSubjectArea] = useState<string>(() => {
-    return localStorage.getItem('tue_tinh_subject') || 'Toán học (Bilingual/EMI)';
+    return localStorage.getItem('tue_tinh_subject') || 'Tiếng Anh Giao tiếp';
   });
   const [isOnboarded, setIsOnboarded] = useState<boolean>(() => {
     return localStorage.getItem('tue_tinh_onboarded') === 'true';
@@ -91,7 +91,7 @@ export default function App() {
       localStorage.clear();
       setTeacherName('');
       setSchoolLabel('');
-      setSubjectArea('Toán học (Bilingual/EMI)');
+      setSubjectArea('Tiếng Anh Giao tiếp');
       setIsOnboarded(false);
       setAttempts([]);
       setActiveTest(null);
@@ -388,38 +388,18 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-semibold text-slate-300 mb-1.5" htmlFor="t-school">
-                    Đơn vị Công tác
-                  </label>
-                  <input
-                    id="t-school"
-                    type="text"
-                    value={schoolLabel}
-                    onChange={(e) => setSchoolLabel(e.target.value)}
-                    placeholder="Ví dụ: THPT Tuệ Tĩnh"
-                    className="w-full px-4 py-2.5 bg-slate-950 border border-slate-850 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition-all text-white placeholder-slate-600 shadow-inner"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-semibold text-slate-300 mb-1.5" htmlFor="t-subject">
-                    Chuyên môn Giảng dạy
-                  </label>
-                  <select
-                    id="t-subject"
-                    value={subjectArea}
-                    onChange={(e) => setSubjectArea(e.target.value)}
-                    className="w-full px-4 py-2.5 bg-slate-950 border border-slate-850 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition-all text-white shadow-inner cursor-pointer"
-                  >
-                    <option value="Toán học (Bilingual/EMI)" className="bg-slate-950 text-white">Toán học (Song ngữ)</option>
-                    <option value="Vật lý & Hóa học (Bilingual/EMI)" className="bg-slate-950 text-white">Vật lý & Hóa học (Song ngữ)</option>
-                    <option value="Sinh học & Công nghệ (Bilingual/EMI)" className="bg-slate-950 text-white">Sinh học & Công nghệ (Song ngữ)</option>
-                    <option value="Tin học & Khoa học máy tính" className="bg-slate-950 text-white">Tin học & Khoa học máy tính</option>
-                    <option value="Cán bộ Quản lý trường học" className="bg-slate-950 text-white">Cán bộ Quản lý trường học</option>
-                  </select>
-                </div>
+              <div>
+                <label className="block text-sm font-semibold text-slate-300 mb-1.5" htmlFor="t-school">
+                  Đơn vị Công tác
+                </label>
+                <input
+                  id="t-school"
+                  type="text"
+                  value={schoolLabel}
+                  onChange={(e) => setSchoolLabel(e.target.value)}
+                  placeholder="Ví dụ: THPT Tuệ Tĩnh"
+                  className="w-full px-4 py-2.5 bg-slate-950 border border-slate-850 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition-all text-white placeholder-slate-600 shadow-inner"
+                />
               </div>
 
               <div className="bg-slate-950/40 border border-slate-850 p-4 rounded-xl text-xs space-y-2 text-slate-400">
@@ -763,7 +743,7 @@ export default function App() {
 
                     <div className="bg-slate-950/40 p-4 rounded-xl border border-slate-800 text-[11px] text-slate-400">
                       <span className="font-semibold text-slate-350 block mb-1">Thông cáo Bản quyền hệ thống:</span>
-                      Biên soạn & Thiết lập chương trình bởi <strong>Ths Nguyễn Văn Thành</strong>, phục vụ cho công tác tự bồi dưỡng giáo viên bộ môn THPT Tuệ Tĩnh (giảng dạy song ngữ / CLIL / EMI) trong kỷ nguyên số 2026.
+                      Biên soạn & Thiết lập chương trình bởi <strong>Ths Nguyễn Văn Thành</strong>, phục vụ cho công tác tự bồi dưỡng năng lực Tiếng Anh Giao tiếp (Bậc 2 - Bậc 4) cho giáo viên THPT Tuệ Tĩnh trong kỷ nguyên số 2026.
                     </div>
                   </div>
 
@@ -907,7 +887,7 @@ export default function App() {
                             {teacherName}
                           </p>
                           <p className="text-xs text-slate-500 uppercase font-mono">
-                            Đơn vị: {schoolLabel || 'Trường THPT Tuệ Tĩnh'} — Chuyên mục: {subjectArea}
+                            Đơn vị: {schoolLabel || 'Trường THPT Tuệ Tĩnh'}
                           </p>
                         </div>
 
@@ -1250,7 +1230,7 @@ export default function App() {
             <span>Hệ thống Demo Khảo sát Năng lực Tiếng Anh Giáo viên THPT Tuệ Tĩnh</span>
           </div>
           <p className="max-w-xl mx-auto leading-relaxed font-serif text-slate-450">
-            Dự án nghiên cứu tiếng Anh ứng dụng giảng dạy môn học (CLIL/EMI) cho giáo viên bộ môn năm 2026. Chương trình thiết lập hoàn chỉnh tự động xoay chuyển đề khảo sát, ngăn ngừa triệt để hiện tượng trùng lặp câu hỏi trong 5 lần lấy mẫu liên tiếp.
+            Dự án nghiên cứu tự bồi dưỡng năng lực Tiếng Anh Giao tiếp (Bậc 2 - Bậc 4) cho giáo viên trong kỷ nguyên số 2026. Chương trình thiết lập hoàn chỉnh tự động xoay chuyển đề khảo sát, ngăn ngừa triệt để hiện tượng trùng lặp câu hỏi trong 5 lần lấy mẫu liên tiếp.
           </p>
           <div className="text-slate-600">
             <span>© 2026 Tuệ Tĩnh High School. All Rights Reserved. Biên soạn bởi <strong>Ths Nguyễn Văn Thành</strong>.</span>

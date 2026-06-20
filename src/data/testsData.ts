@@ -1475,63 +1475,64 @@ const RAW_TESTS_DATA: any[] = [
   }
 ];
 
-// Helper function to adapt terms to non-English subject teachers (e.g., Mathematics, Science, etc.)
+// Helper function to adapt terms to general school English communication (CEFR Level 2 to 4)
 function adaptText(text: string | undefined): string | undefined {
   if (!text) return text;
   return text
-    .replace(/\bEnglish teacher\b/gi, "Subject teacher (bilingual)")
-    .replace(/\bEnglish teachers\b/gi, "bilingual subject teachers")
-    .replace(/\bEnglish portfolio\b/gi, "bilingual lesson portfolio")
-    .replace(/\bEnglish portfolios\b/gi, "bilingual lesson portfolios")
-    .replace(/\bEnglish class\b/gi, "bilingual classroom")
-    .replace(/\bEnglish classes\b/gi, "bilingual classrooms")
-    .replace(/\blanguage classroom\b/gi, "bilingual classroom")
-    .replace(/\blanguage classrooms\b/gi, "bilingual classrooms")
-    .replace(/\blanguage learning\b/gi, "bilingual subject learning")
-    .replace(/\blanguage acquisition\b/gi, "subject terminology acquisition")
-    .replace(/\blanguage festival\b/gi, "bilingual STEM festival")
-    .replace(/\bEnglish-teaching\b/gi, "bilingual teaching")
-    .replace(/\bEnglish instruction\b/gi, "bilingual instruction")
-    .replace(/\bEnglish lesson\b/gi, "bilingual lesson")
-    .replace(/\bEnglish lessons\b/gi, "bilingual lessons")
-    .replace(/\bteaching English\b/gi, "teaching school subjects in English")
-    .replace(/\bEnglish test\b/gi, "subject assessment in English")
-    .replace(/giáo viên tiếng Anh/gi, "giáo viên dạy môn học bằng tiếng Anh (CLIL)")
-    .replace(/giáo viên Tiếng Anh/gi, "giáo viên dạy môn học bằng tiếng Anh (CLIL)")
-    .replace(/sư phạm ngoại ngữ/gi, "tiếng Anh ứng dụng dạy môn học")
-    .replace(/Sư phạm ngoại ngữ/gi, "tiếng Anh ứng dụng dạy môn học")
-    .replace(/phương pháp giảng dạy ngoại ngữ/gi, "phương pháp giảng dạy song ngữ (CLIL)")
-    .replace(/lớp học tiếng Anh/gi, "lớp học song ngữ")
-    .replace(/bài giảng tiếng Anh/gi, "bài giảng dạy bằng Tiếng Anh")
-    .replace(/học tập tiếng Anh/gi, "học tập song ngữ / CLIL")
-    .replace(/giao tiếp tiếng Anh/gi, "giao tiếp tiếng Anh chuyên môn")
-    .replace(/lễ hội ngôn ngữ/gi, "lễ hội STEM song ngữ")
-    .replace(/vào giờ nói tiếng Anh/gi, "trong giờ học song ngữ")
-    .replace(/giáo viên ngoại ngữ/gi, "giáo viên dạy chuyên môn bằng tiếng Anh")
-    .replace(/ngoại ngữ/gi, "tiếng Anh chuyên ngành")
-    .replace(/Ngoại ngữ/gi, "Tiếng Anh chuyên ngành");
+    .replace(/\bEnglish teacher\b/gi, "teacher")
+    .replace(/\bEnglish teachers\b/gi, "teachers")
+    .replace(/\bEnglish portfolio\b/gi, "communication portfolio")
+    .replace(/\bEnglish portfolios\b/gi, "communication portfolios")
+    .replace(/\bEnglish class\b/gi, "classroom dynamic")
+    .replace(/\bEnglish classes\b/gi, "classroom dynamics")
+    .replace(/\blanguage classroom\b/gi, "communicative classroom")
+    .replace(/\blanguage classrooms\b/gi, "communicative classrooms")
+    .replace(/\blanguage learning\b/gi, "English communication learning")
+    .replace(/\blanguage acquisition\b/gi, "communicative vocabulary acquisition")
+    .replace(/\blanguage festival\b/gi, "school festival")
+    .replace(/\bEnglish-teaching\b/gi, "teaching")
+    .replace(/\bEnglish instruction\b/gi, "classroom English interaction")
+    .replace(/\bEnglish lesson\b/gi, "class discussion")
+    .replace(/\bEnglish lessons\b/gi, "class discussions")
+    .replace(/\bteaching English\b/gi, "communicating in English")
+    .replace(/\bEnglish test\b/gi, "communicative evaluation")
+    .replace(/giáo viên tiếng Anh/gi, "giáo viên")
+    .replace(/giáo viên Tiếng Anh/gi, "giáo viên")
+    .replace(/sư phạm ngoại ngữ/gi, "tiếng Anh giao tiếp học đường")
+    .replace(/Sư phạm ngoại ngữ/gi, "tiếng Anh giao tiếp học đường")
+    .replace(/phương pháp giảng dạy ngoại ngữ/gi, "phương pháp giao tiếp chủ động")
+    .replace(/lớp học tiếng Anh/gi, "lớp học tương tác")
+    .replace(/bài giảng tiếng Anh/gi, "tiết học giao tiếp")
+    .replace(/học tập tiếng Anh/gi, "giao tiếp tiếng Anh")
+    .replace(/giao tiếp tiếng Anh chuyên môn/gi, "giao tiếp tiếng Anh học đường")
+    .replace(/giao tiếp tiếng Anh/gi, "giao tiếp bằng tiếng Anh")
+    .replace(/lễ hội ngôn ngữ/gi, "lễ hội giao lưu học đường")
+    .replace(/vào giờ nói tiếng Anh/gi, "trong phản xạ giao tiếp")
+    .replace(/giáo viên ngoại ngữ/gi, "giáo viên")
+    .replace(/ngoại ngữ/gi, "giao tiếp tiếng Anh")
+    .replace(/Ngoại ngữ/gi, "Giao tiếp tiếng Anh");
 }
 
 const ADAPTED_META: Record<string, { title: string; description: string }> = {
   "test-01": {
-    title: "Đề Khảo sát số 1: Kỹ năng Giao tiếp Lớp học Song ngữ & Thuật ngữ Cơ bản",
-    description: "Đánh giá năng lực sử dụng tiếng Anh của giáo viên bộ môn khi chỉ dẫn lớp học, giải thích khái niệm cơ bản và tương tác sư phạm (CLIL/EMI)."
+    title: "Đề Khảo sát số 1: Giao tiếp Xã hội & Tương tác Học đường Cơ bản",
+    description: "Đánh giá mức độ sử dụng tiếng Anh giao tiếp hàng ngày tại trường học, chào hỏi học sinh và phụ huynh, giới thiệu bản thân (CEFR Bậc 2)."
   },
   "test-02": {
-    title: "Đề Khảo sát số 2: Đọc hiểu Học liệu & Tài liệu Nghiên cứu Chuyên môn",
-    description: "Đánh giá năng lực tiếng Anh trong việc tra cứu, nghiên cứu và khai thác bài báo khoa học, SGK Toán - Khoa học quốc tế."
+    title: "Đề Khảo sát số 2: Ngôn ngữ Giao tiếp Lớp học & Chỉ dẫn Giảng dạy",
+    description: "Khảo sát kỹ năng sử dụng tiếng Anh giao tiếp chỉ dẫn lớp học, thiết lập hoạt động học tập, khen ngợi động viên và đặt câu hỏi tương tác (CEFR Bậc 3)."
   },
   "test-03": {
-    title: "Đề Khảo sát số 3: Thiết kế Giáo án & Trình bày Diễn giảng bách khoa",
-    description: "Đánh giá năng lực soạn thảo bài giảng song ngữ, cấu trúc ngữ pháp nâng cao, viết đề mục và diễn thuyết chủ môn học bằng tiếng Anh."
+    title: "Đề Khảo sát số 3: Đọc hiểu Học liệu & Trao đổi Công việc nội bộ",
+    description: "Kiểm tra kỹ năng đọc hiểu tài liệu hướng dẫn, thông báo học vụ, trao đổi email cơ bản và thảo luận công việc với đồng nghiệp bằng tiếng Anh (CEFR Bậc 3)."
   },
   "test-04": {
-    title: "Đề Khảo sát số 4: Ứng dụng CNTT & Sử dụng Công cụ số bằng Tiếng Anh",
-    description: "Đánh giá từ vựng và cấu trúc tiếng Anh kỹ thuật khi thao tác phần mềm, ứng dụng AI hỗ trợ dạy học và soạn bài thi trắc nghiệm song ngữ."
+    title: "Đề Khảo sát số 4: Giao tiếp qua Email công việc & Hội họp Học vụ",
+    description: "Đánh giá cấu trúc chuyên nghiệp khi soạn thư học vụ, phản hồi từ phụ huynh và trao đổi các vấn đề kỷ luật hay khen thưởng học sinh (CEFR Bậc 4)."
   },
   "test-05": {
-    title: "Đề Khảo sát số 5: Giao lưu Quốc tế & Nghiên cứu Khoa học Liên ngành",
-    description: "Đánh giá tiếng Anh phản xạ phục vụ hội thảo khoa học, trao đổi học thuật bách khoa toàn thư thế giới và viết bài báo cáo học thuật quốc tế."
+    title: "Đề Khảo sát số 5: Thuyết trình Dự án & Giao lưu Quốc tế",
+    description: "Khảo sát mức độ diễn đạt lưu loát của giáo viên khi trình bày báo cáo giáo dục, giải thích quy tắc học đường và phản xạ đàm thoại hội thảo (CEFR Bậc 4)."
   }
 };
 
