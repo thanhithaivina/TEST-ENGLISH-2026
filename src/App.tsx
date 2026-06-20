@@ -44,7 +44,7 @@ export default function App() {
     return localStorage.getItem('tue_tinh_school') || '';
   });
   const [subjectArea, setSubjectArea] = useState<string>(() => {
-    return localStorage.getItem('tue_tinh_subject') || 'Tiếng Anh THPT';
+    return localStorage.getItem('tue_tinh_subject') || 'Toán học (Bilingual/EMI)';
   });
   const [isOnboarded, setIsOnboarded] = useState<boolean>(() => {
     return localStorage.getItem('tue_tinh_onboarded') === 'true';
@@ -91,7 +91,7 @@ export default function App() {
       localStorage.clear();
       setTeacherName('');
       setSchoolLabel('');
-      setSubjectArea('Tiếng Anh THPT');
+      setSubjectArea('Toán học (Bilingual/EMI)');
       setIsOnboarded(false);
       setAttempts([]);
       setActiveTest(null);
@@ -134,12 +134,10 @@ export default function App() {
     const completedCount = attempts.length;
     const avgScore = attempts.reduce((acc, a) => acc + a.score, 0) / completedCount;
 
-    // Estimate CEFR level based on average score (max 20 questions)
-    // < 10: Bậc 2 (A2), 10-14: Bậc 3 (B1), 15-18: Bậc 4 (B2), 19-20: Bậc 5 (C1)
-    let level = 'Bậc 2 (A2)';
-    if (avgScore >= 18.5) level = 'Bậc 5 (C1) - Rất xuất sắc';
-    else if (avgScore >= 14.5) level = 'Bậc 4 (B2) - Đạt chuẩn THPT';
-    else if (avgScore >= 9.5) level = 'Bậc 3 (B1) - Đạt chuẩn THCS';
+    // Estimate Level based on average score (max 20 questions) within standard Bậc 2 - Bậc 4
+    let level = 'Bậc 2 (A2) - Giao tiếp Cơ bản';
+    if (avgScore >= 15.5) level = 'Bậc 4 (B2) - Giao tiếp Đạt Chuẩn Cao cấp';
+    else if (avgScore >= 9.5) level = 'Bậc 3 (B1) - Giao tiếp Khá Linh hoạt';
 
     return {
       avgScore: parseFloat(avgScore.toFixed(1)),
@@ -201,15 +199,13 @@ export default function App() {
     const percentage = Math.round((correctCount / activeTest.questions.length) * 100);
 
     // Calculate level recommendation
-    let recommendedLevel = 'Khung năng lực ngoại ngữ VN: Bậc 2 (A2)';
-    if (correctCount >= 19) {
-      recommendedLevel = 'Bậc 5 (C1) - Năng lực Ngôn ngữ Sư phạm Xuất sắc';
-    } else if (correctCount >= 15) {
-      recommendedLevel = 'Bậc 4 (B2) - Đạt Chuẩn Giảng dạy THPT';
+    let recommendedLevel = 'Bậc 2 (A2) - Năng lực Tiếng Anh Giao tiếp cơ bản';
+    if (correctCount >= 16) {
+      recommendedLevel = 'Bậc 4 (B2) - Năng lực Tiếng Anh Giao tiếp Đạt Chuẩn học thuật';
     } else if (correctCount >= 10) {
-      recommendedLevel = 'Bậc 3 (B1) - Đạt chuẩn Cấp Tiểu học / THCS';
+      recommendedLevel = 'Bậc 3 (B1) - Năng lực Tiếng Anh Giao tiếp Đổi mới linh hoạt';
     } else {
-      recommendedLevel = 'Bậc 2 (A2) - Cần cải thiện bồi dưỡng chuyên môn';
+      recommendedLevel = 'Bậc 2 (A2) - Năng lực Tiếng Anh Giao tiếp cơ bản (Cấu trúc tương tác bổ trợ)';
     }
 
     const spentTime = activeTest.durationMinutes * 60 - secondsLeft;
@@ -322,7 +318,7 @@ export default function App() {
                 Hệ thống Demo Khảo sát Năng lực Tiếng Anh Giáo viên THPT Tuệ Tĩnh
               </h1>
               <p className="text-xs text-slate-400 mt-1 flex items-center gap-2">
-                <span>Khung Đánh giá Sư phạm 2026 (Bậc 2 - Bậc 4)</span>
+                <span>Khảo sát Tiếng Anh Giao tiếp (Bậc 2 - Bậc 4)</span>
                 <span className="w-1.5 h-1.5 rounded-full bg-slate-700"></span>
                 <span className="font-semibold text-indigo-400">Tác giả: Ths Nguyễn Văn Thành</span>
               </p>
@@ -417,10 +413,11 @@ export default function App() {
                     onChange={(e) => setSubjectArea(e.target.value)}
                     className="w-full px-4 py-2.5 bg-slate-950 border border-slate-850 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition-all text-white shadow-inner cursor-pointer"
                   >
-                    <option value="Tiếng Anh THPT" className="bg-slate-950 text-white">Tiếng Anh THPT</option>
-                    <option value="Tiếng Anh THCS" className="bg-slate-950 text-white">Tiếng Anh THCS</option>
-                    <option value="Tiếng Anh Tiểu Học" className="bg-slate-950 text-white">Tiếng Anh Tiểu Học</option>
-                    <option value="Cán bộ Quản lý Giáo dục" className="bg-slate-950 text-white">Cán bộ Quản lý</option>
+                    <option value="Toán học (Bilingual/EMI)" className="bg-slate-950 text-white">Toán học (Song ngữ)</option>
+                    <option value="Vật lý & Hóa học (Bilingual/EMI)" className="bg-slate-950 text-white">Vật lý & Hóa học (Song ngữ)</option>
+                    <option value="Sinh học & Công nghệ (Bilingual/EMI)" className="bg-slate-950 text-white">Sinh học & Công nghệ (Song ngữ)</option>
+                    <option value="Tin học & Khoa học máy tính" className="bg-slate-950 text-white">Tin học & Khoa học máy tính</option>
+                    <option value="Cán bộ Quản lý trường học" className="bg-slate-950 text-white">Cán bộ Quản lý trường học</option>
                   </select>
                 </div>
               </div>
@@ -647,7 +644,7 @@ export default function App() {
                       Lưu ý kiểm tra quan trọng:
                     </p>
                     <p>
-                      Đánh giá mức độ phân tầng (CEFR Bậc 2 đến Bậc 4) yêu cầu Thầy/Cô tích hợp cân bằng cả phong cách phân tích, đọc hiểu và tiếng Anh học thuật sư phạm lớp học.
+                      Đánh giá mức độ phân tầng (CEFR Bậc 2 đến Bậc 4) yêu cầu Thầy/Cô tích hợp cân bằng cả phong cách phân tích, đọc hiểu và tiếng Anh học thuật và ngôn ngữ lớp học song ngữ.
                     </p>
                     <p>
                       Bài khảo sát kéo dài <strong>20 phút</strong>. Nhấn nút <strong>Nộp Bài</strong> phía dưới bản đồ sau khi điền đầy đủ đáp án để kết xuất chứng thư kết quả nhanh.
@@ -766,7 +763,7 @@ export default function App() {
 
                     <div className="bg-slate-950/40 p-4 rounded-xl border border-slate-800 text-[11px] text-slate-400">
                       <span className="font-semibold text-slate-350 block mb-1">Thông cáo Bản quyền hệ thống:</span>
-                      Biên soạn & Thiết lập chương trình bởi <strong>Ths Nguyễn Văn Thành</strong>, phục vụ cho công tác tự bồi dưỡng giáo viên Tiếng Anh THPT Tuệ Tĩnh trong kỷ nguyên số 2026.
+                      Biên soạn & Thiết lập chương trình bởi <strong>Ths Nguyễn Văn Thành</strong>, phục vụ cho công tác tự bồi dưỡng giáo viên bộ môn THPT Tuệ Tĩnh (giảng dạy song ngữ / CLIL / EMI) trong kỷ nguyên số 2026.
                     </div>
                   </div>
 
@@ -890,7 +887,7 @@ export default function App() {
                             HỘI ĐỒNG KHẢO SÁT CHUYÊN MÔN THPT TUỆ TĨNH
                           </span>
                           <span className="text-sm tracking-wide text-slate-450 font-serif font-semibold italic block font-serif">
-                            Cơ sở dữ liệu Đánh giá Năng lực Sư phạm Ngoại ngữ 2026
+                            Cơ sở dữ liệu Đánh giá Năng lực Tiếng Anh Giáo viên Bộ môn 2026
                           </span>
                         </div>
 
@@ -901,7 +898,7 @@ export default function App() {
                             BÁO CÁO KẾT QUẢ KHẢO SÁT
                           </h2>
                           <p className="text-sm font-serif text-slate-400 font-serif">
-                            Hệ thống tự động ghi nhận và đóng mộc chứng thực năng lực sư phạm của:
+                            Hệ thống tự động ghi nhận và đóng mộc chứng thực năng lực Tiếng Anh chuyên môn của:
                           </p>
                         </div>
 
@@ -935,7 +932,7 @@ export default function App() {
                         </div>
 
                         <p className="text-[11px] text-slate-500 italic max-w-md mx-auto leading-relaxed font-serif">
-                          * Bản báo cáo được tự động kết xuất dựa trên 20 câu hỏi VSTEP ngẫu nhiên không lặp thuộc hệ thống bồi dưỡng của Ths Nguyễn Văn Thành, đảm bảo độ phủ 100% không trùng của 5 lần thi liên tiếp.
+                          * Bản báo cáo được tự động kết xuất dựa trên 20 câu hỏi khảo sát năng lực Tiếng Anh chuyên môn ngẫu nhiên không lặp thuộc hệ thống bồi dưỡng của Ths Nguyễn Văn Thành, đảm bảo độ phủ 100% không trùng của 5 lần thi liên tiếp.
                         </p>
 
                         <div className="flex items-center justify-between pt-6 border-t border-slate-850 max-w-lg mx-auto">
@@ -978,7 +975,7 @@ export default function App() {
                     {skillBreakdown && (
                       <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-6 shadow-sm">
                         <h3 className="font-bold text-white text-sm mb-4">
-                          Bảng Phân Tích Phân Nhóm Năng Lực Sư Phạm
+                          Bảng Phân Tích Năng Lực Theo Phần Đánh Giá
                         </h3>
 
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -1253,7 +1250,7 @@ export default function App() {
             <span>Hệ thống Demo Khảo sát Năng lực Tiếng Anh Giáo viên THPT Tuệ Tĩnh</span>
           </div>
           <p className="max-w-xl mx-auto leading-relaxed font-serif text-slate-450">
-            Dự án nghiên cứu sư phạm ứng dụng cho giáo viên phổ thông năm 2026. Chương trình thiết lập hoàn chỉnh tự động xoay chuyển đề khảo sát, ngăn ngừa triệt để hiện tượng trùng lắp câu hỏi trong 5 lần lấy mẫu liên tiếp.
+            Dự án nghiên cứu tiếng Anh ứng dụng giảng dạy môn học (CLIL/EMI) cho giáo viên bộ môn năm 2026. Chương trình thiết lập hoàn chỉnh tự động xoay chuyển đề khảo sát, ngăn ngừa triệt để hiện tượng trùng lặp câu hỏi trong 5 lần lấy mẫu liên tiếp.
           </p>
           <div className="text-slate-600">
             <span>© 2026 Tuệ Tĩnh High School. All Rights Reserved. Biên soạn bởi <strong>Ths Nguyễn Văn Thành</strong>.</span>

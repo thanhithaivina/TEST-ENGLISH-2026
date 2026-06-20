@@ -1,6 +1,6 @@
 {
-  "name": "Khảo sát Năng lực Tiếng Anh Tuệ Tĩnh",
-  "description": "Hệ thống Demo Khảo sát Năng lực Tiếng Anh cho Giáo viên Phổ thông 2026 - Tác giả Ths Nguyễn Văn Thành",
+  "name": "Hệ thống Demo Khảo sát Năng lực Tiếng Anh Giáo viên THPT Tuệ Tĩnh",
+  "description": "Hệ thống Khảo sát Năng lực Tiếng Anh cho Giáo viên Bộ môn (non-English teachers) THPT Tuệ Tĩnh 2026 - ThS Nguyễn Văn Thành",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

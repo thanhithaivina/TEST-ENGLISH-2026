@@ -1475,6 +1475,66 @@ const RAW_TESTS_DATA: any[] = [
   }
 ];
 
+// Helper function to adapt terms to non-English subject teachers (e.g., Mathematics, Science, etc.)
+function adaptText(text: string | undefined): string | undefined {
+  if (!text) return text;
+  return text
+    .replace(/\bEnglish teacher\b/gi, "Subject teacher (bilingual)")
+    .replace(/\bEnglish teachers\b/gi, "bilingual subject teachers")
+    .replace(/\bEnglish portfolio\b/gi, "bilingual lesson portfolio")
+    .replace(/\bEnglish portfolios\b/gi, "bilingual lesson portfolios")
+    .replace(/\bEnglish class\b/gi, "bilingual classroom")
+    .replace(/\bEnglish classes\b/gi, "bilingual classrooms")
+    .replace(/\blanguage classroom\b/gi, "bilingual classroom")
+    .replace(/\blanguage classrooms\b/gi, "bilingual classrooms")
+    .replace(/\blanguage learning\b/gi, "bilingual subject learning")
+    .replace(/\blanguage acquisition\b/gi, "subject terminology acquisition")
+    .replace(/\blanguage festival\b/gi, "bilingual STEM festival")
+    .replace(/\bEnglish-teaching\b/gi, "bilingual teaching")
+    .replace(/\bEnglish instruction\b/gi, "bilingual instruction")
+    .replace(/\bEnglish lesson\b/gi, "bilingual lesson")
+    .replace(/\bEnglish lessons\b/gi, "bilingual lessons")
+    .replace(/\bteaching English\b/gi, "teaching school subjects in English")
+    .replace(/\bEnglish test\b/gi, "subject assessment in English")
+    .replace(/giáo viên tiếng Anh/gi, "giáo viên dạy môn học bằng tiếng Anh (CLIL)")
+    .replace(/giáo viên Tiếng Anh/gi, "giáo viên dạy môn học bằng tiếng Anh (CLIL)")
+    .replace(/sư phạm ngoại ngữ/gi, "tiếng Anh ứng dụng dạy môn học")
+    .replace(/Sư phạm ngoại ngữ/gi, "tiếng Anh ứng dụng dạy môn học")
+    .replace(/phương pháp giảng dạy ngoại ngữ/gi, "phương pháp giảng dạy song ngữ (CLIL)")
+    .replace(/lớp học tiếng Anh/gi, "lớp học song ngữ")
+    .replace(/bài giảng tiếng Anh/gi, "bài giảng dạy bằng Tiếng Anh")
+    .replace(/học tập tiếng Anh/gi, "học tập song ngữ / CLIL")
+    .replace(/giao tiếp tiếng Anh/gi, "giao tiếp tiếng Anh chuyên môn")
+    .replace(/lễ hội ngôn ngữ/gi, "lễ hội STEM song ngữ")
+    .replace(/vào giờ nói tiếng Anh/gi, "trong giờ học song ngữ")
+    .replace(/giáo viên ngoại ngữ/gi, "giáo viên dạy chuyên môn bằng tiếng Anh")
+    .replace(/ngoại ngữ/gi, "tiếng Anh chuyên ngành")
+    .replace(/Ngoại ngữ/gi, "Tiếng Anh chuyên ngành");
+}
+
+const ADAPTED_META: Record<string, { title: string; description: string }> = {
+  "test-01": {
+    title: "Đề Khảo sát số 1: Kỹ năng Giao tiếp Lớp học Song ngữ & Thuật ngữ Cơ bản",
+    description: "Đánh giá năng lực sử dụng tiếng Anh của giáo viên bộ môn khi chỉ dẫn lớp học, giải thích khái niệm cơ bản và tương tác sư phạm (CLIL/EMI)."
+  },
+  "test-02": {
+    title: "Đề Khảo sát số 2: Đọc hiểu Học liệu & Tài liệu Nghiên cứu Chuyên môn",
+    description: "Đánh giá năng lực tiếng Anh trong việc tra cứu, nghiên cứu và khai thác bài báo khoa học, SGK Toán - Khoa học quốc tế."
+  },
+  "test-03": {
+    title: "Đề Khảo sát số 3: Thiết kế Giáo án & Trình bày Diễn giảng bách khoa",
+    description: "Đánh giá năng lực soạn thảo bài giảng song ngữ, cấu trúc ngữ pháp nâng cao, viết đề mục và diễn thuyết chủ môn học bằng tiếng Anh."
+  },
+  "test-04": {
+    title: "Đề Khảo sát số 4: Ứng dụng CNTT & Sử dụng Công cụ số bằng Tiếng Anh",
+    description: "Đánh giá từ vựng và cấu trúc tiếng Anh kỹ thuật khi thao tác phần mềm, ứng dụng AI hỗ trợ dạy học và soạn bài thi trắc nghiệm song ngữ."
+  },
+  "test-05": {
+    title: "Đề Khảo sát số 5: Giao lưu Quốc tế & Nghiên cứu Khoa học Liên ngành",
+    description: "Đánh giá tiếng Anh phản xạ phục vụ hội thảo khoa học, trao đổi học thuật bách khoa toàn thư thế giới và viết bài báo cáo học thuật quốc tế."
+  }
+};
+
 // Dynamically transform and reorder the raw tests data to produce exactly 4 sections
 // for each test, each containing exactly 5 questions:
 // - Part 1: USE OF ENGLISH (use_of_english)
@@ -1487,39 +1547,55 @@ export const TESTS_DATA: TestSet[] = RAW_TESTS_DATA.map((test) => {
     return test as TestSet;
   }
 
+  // Filter and transform questions so they focus on subject teachers, bilinguality and CLIL
+  const processQuestion = (q: any) => {
+    return {
+      ...q,
+      questionText: adaptText(q.questionText) || q.questionText,
+      explanation: adaptText(q.explanation) || q.explanation,
+      vietnameseTranslation: adaptText(q.vietnameseTranslation) || q.vietnameseTranslation,
+      passage: adaptText(q.passage) || q.passage,
+      options: (q.options || []).map((o: string) => adaptText(o) || o)
+    };
+  };
+
   // Define our symmetrical mappings of indices
   const transformedQuestions = [
     // 1. USE OF ENGLISH (5 questions: original Grammar 1 to 5)
-    { ...qs[0], type: 'use_of_english' as const },
-    { ...qs[1], type: 'use_of_english' as const },
-    { ...qs[2], type: 'use_of_english' as const },
-    { ...qs[3], type: 'use_of_english' as const },
-    { ...qs[4], type: 'use_of_english' as const },
+    { ...processQuestion(qs[0]), type: 'use_of_english' as const },
+    { ...processQuestion(qs[1]), type: 'use_of_english' as const },
+    { ...processQuestion(qs[2]), type: 'use_of_english' as const },
+    { ...processQuestion(qs[3]), type: 'use_of_english' as const },
+    { ...processQuestion(qs[4]), type: 'use_of_english' as const },
 
     // 2. READING (5 questions: original Reading 1 to 5)
-    { ...qs[13], type: 'reading' as const },
-    { ...qs[14], type: 'reading' as const },
-    { ...qs[15], type: 'reading' as const },
-    { ...qs[16], type: 'reading' as const },
-    { ...qs[17], type: 'reading' as const },
+    { ...processQuestion(qs[13]), type: 'reading' as const },
+    { ...processQuestion(qs[14]), type: 'reading' as const },
+    { ...processQuestion(qs[15]), type: 'reading' as const },
+    { ...processQuestion(qs[16]), type: 'reading' as const },
+    { ...processQuestion(qs[17]), type: 'reading' as const },
 
     // 3. WRITING (5 questions: 2 Grammar + 3 Error Identification)
-    { ...qs[5], type: 'writing' as const },
-    { ...qs[6], type: 'writing' as const },
-    { ...qs[10], type: 'writing' as const },
-    { ...qs[11], type: 'writing' as const },
-    { ...qs[12], type: 'writing' as const },
+    { ...processQuestion(qs[5]), type: 'writing' as const },
+    { ...processQuestion(qs[6]), type: 'writing' as const },
+    { ...processQuestion(qs[10]), type: 'writing' as const },
+    { ...processQuestion(qs[11]), type: 'writing' as const },
+    { ...processQuestion(qs[12]), type: 'writing' as const },
 
     // 4. SPEAKING (5 questions: 3 Grammar + 2 Pedagogical Speaking)
-    { ...qs[7], type: 'speaking' as const },
-    { ...qs[8], type: 'speaking' as const },
-    { ...qs[9], type: 'speaking' as const },
-    { ...qs[18], type: 'speaking' as const },
-    { ...qs[19], type: 'speaking' as const }
+    { ...processQuestion(qs[7]), type: 'speaking' as const },
+    { ...processQuestion(qs[8]), type: 'speaking' as const },
+    { ...processQuestion(qs[9]), type: 'speaking' as const },
+    { ...processQuestion(qs[18]), type: 'speaking' as const },
+    { ...processQuestion(qs[19]), type: 'speaking' as const }
   ];
+
+  const meta = ADAPTED_META[test.id] || { title: test.title, description: test.description };
 
   return {
     ...test,
+    title: meta.title,
+    description: meta.description,
     questions: transformedQuestions
   };
 });
